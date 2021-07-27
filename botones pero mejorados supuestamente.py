@@ -1,10 +1,11 @@
 import pygame
 from images import *
 from game import *
+
 ancho_pantalla = 512
 alto_pantalla = 480
 screen = pygame.display.set_mode((ancho_pantalla,alto_pantalla))
-pygame.display.set_caption("BOTONES MARCA BRUH")
+pygame.display.set_caption("Zombinvaders")
 cursor = pygame.mouse.get_pos()
 background = fondo
 background2 = fondo2
@@ -30,6 +31,7 @@ def controles():
             submenu()
         if flechader1.draw():
             game()
+            print("click")
         for i in pygame.event.get():
             if i.type == pygame.QUIT:
                 quit()

@@ -28,14 +28,17 @@ class Player(Entity):
         self.score = 0
         self.bullets = pg.sprite.Group()
         self.delta = 0
+        self.temp= 411
+        
 
     def move(self, move_speed):
+        
         self.position.xy += self.direction.xy * move_speed
         # Asegurar que el jugador no se salga de la zona designada
         if self.position.x >= 488:
             self.position.x = 488
-        elif self.position.x <= 411:
-            self.position.x = 411
+        elif self.position.x <= self.temp:
+            self.position.x = self.temp
         if self.position.y <= 0:
             self.position.y = 0
         elif self.position.y >= 383:
