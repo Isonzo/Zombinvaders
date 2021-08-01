@@ -88,6 +88,9 @@ controles2 = Boton(290,140,controles2,controles2)
 def menu():
     loop = True
     while loop:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                loop = False
         screen.blit(background, [0,0])
         if inicio.draw():
             fade(800,500)
