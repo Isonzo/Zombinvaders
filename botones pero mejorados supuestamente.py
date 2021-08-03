@@ -2,11 +2,14 @@ import pygame
 from images import *
 ancho_pantalla = 512
 alto_pantalla = 480
+cuadro_texto1 = pygame.Rect(20,200,190,60)
+cuadro_texto2 = pygame.Rect(300,200,190,60)
+pygame.font.init()
 screen = pygame.display.set_mode((ancho_pantalla,alto_pantalla))
 pygame.display.set_caption("BOTONES MARCA BRUH")
-cursor = pygame.mouse.get_pos()
 background = fondo
 background2 = fondo2
+pygame.mixer.init()
 def fade(ancho,alto):
     fade = pygame.Surface((ancho,alto))
     fade.fill((0,0,0))
@@ -25,30 +28,72 @@ def controles():
         controles1.draw()
         controles2.draw()
         if flechaiz1.draw():
+            pygame.mixer.music.load("317754__jalastram__sfx-explosion-05.wav")
+            pygame.mixer.music.play(1)
             fade(800,500)
             submenu()
         if flechader1.draw():
-            print("click")
+            pygame.mixer.music.load("317754__jalastram__sfx-explosion-05.wav")
+            pygame.mixer.music.play(1)
+            fade(800, 500)
+            #funcion que lleva a los niveles
         for i in pygame.event.get():
             if i.type == pygame.QUIT:
                 quit()
         pygame.display.update()
 def submenu():
+    texto1 = pygame.font.Font("pixel_maz.ttf", 70)
+    usuario1 = ''
+    usuario2 = ''
     salir = True
+    active = False
+    active2 = False
     while salir:
         screen.blit(background2,[0,0])
         pygame.draw.line(screen,(153,255,153),(256,100),(256,300),10)
         texto.draw()
         texto2.draw()
         if flechaiz1.draw():
+            pygame.mixer.music.load("317754__jalastram__sfx-explosion-05.wav")
+            pygame.mixer.music.play(1)
             fade(800,500)
             menu()
         if flechader1.draw():
+            pygame.mixer.music.load("317754__jalastram__sfx-explosion-05.wav")
+            pygame.mixer.music.play(1)
             fade(800,500)
             controles()
         for i in pygame.event.get():
             if i.type == pygame.QUIT:
                 quit()
+            if i.type == pygame.MOUSEBUTTONDOWN:
+                if cuadro_texto1.collidepoint(i.pos):
+                    active = True
+                else:
+                    active = False
+            if i.type == pygame.KEYDOWN:
+                if active == True:
+                    if i.key == pygame.K_BACKSPACE:
+                        usuario1 = usuario1[:-1]
+                    else:
+                        usuario1 += i.unicode
+            if i.type == pygame.MOUSEBUTTONDOWN:
+                if cuadro_texto2.collidepoint(i.pos):
+                    active2 = True
+                else:
+                    active2 = False
+            if i.type == pygame.KEYDOWN:
+                if active2 == True:
+                    if i.key == pygame.K_BACKSPACE:
+                        usuario2 = usuario2[:-1]
+                    else:
+                        usuario2 += i.unicode
+        pygame.draw.rect(screen,(153,255,153),cuadro_texto1,2)
+        letra = texto1.render(usuario1,True,(255,255,255))
+        screen.blit(letra,(cuadro_texto1.x +5, cuadro_texto1.y +5))
+        pygame.draw.rect(screen, (153, 255, 153), cuadro_texto2, 2)
+        letra2 = texto1.render(usuario2, True, (255, 255, 255))
+        screen.blit(letra2, (cuadro_texto2.x + 5, cuadro_texto2.y + 5))
         pygame.display.update()
 
 class Boton():
@@ -86,9 +131,13 @@ controles1 = Boton(20,140,controles1,controles1)
 controles2 = Boton(290,140,controles2,controles2)
 def menu():
     loop = True
+    pygame.mixer.music.load("1-01 Title Theme (Mono).mp3")
+    pygame.mixer.music.play(100)
     while loop:
         screen.blit(background, [0,0])
         if inicio.draw():
+            pygame.mixer.music.load("317754__jalastram__sfx-explosion-05.wav")
+            pygame.mixer.music.play(1)
             fade(800,500)
             submenu()
         if exit.draw():
